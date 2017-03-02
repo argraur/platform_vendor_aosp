@@ -14,14 +14,6 @@
 
 include vendor/aosp/config/version.mk
 
-# Bootanimation
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/bootanimation/bootanimation.zip:system/media/bootanimation.zip
-
-# SuperSU
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/supersu/supersu.zip:install/supersu/supersu.zip
-
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
@@ -46,21 +38,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=0
 
-# EXT4/F2FS format script
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/bin/format.sh:install/bin/format.sh
-
-# Custom JDCTeam packages
+# Packages
 PRODUCT_PACKAGES += \
     BluetoothExt \
     LatinIME \
     Launcher3 \
     LiveWallpapers \
     LiveWallpapersPicker \
-    masquerade \
-    OTAUpdates \
     Stk \
-    Substratum \
     tinymix
 
 # Extra tools
@@ -103,15 +88,10 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 # For keyboard gesture typing
 PRODUCT_COPY_FILES += \
     vendor/aosp/prebuilt/common/lib/libjni_latinimegoogle.so:system/lib/libjni_latinimegoogle.so
-    
-# init.d support
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
-    vendor/aosp/prebuilt/common/bin/sysinit:system/bin/sysinit
 
-# JDC-specific init file
+# AOSP-specific init file
 PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init.local.rc:root/init.jdc.rc
+    vendor/aosp/prebuilt/common/etc/init.local.rc:root/init.aosp.rc
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
@@ -124,14 +104,6 @@ PRODUCT_COPY_FILES += \
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
-
-# Enable wireless Xbox 360 controller support
-PRODUCT_COPY_FILES += \
-    frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_0719.kl
-
-# Prebuilt ConsumerIR
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/lib/hw/consumerir.msm8960.old:system/lib/hw/consumerir.msm8960.old
     
 # Stagefright FFMPEG plugin
 PRODUCT_PACKAGES += \
@@ -147,17 +119,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.storage_manager.enabled=true
 
-# Substratum Verified
-PRODUCT_PROPERTY_OVERRIDES := \
-    ro.substratum.verified=true
-
 # by default, do not update the recovery with system updates
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.recovery_update=false
-
-# Changelog
-PRODUCT_COPY_FILES += \
-    vendor/aosp/Changelog.md:system/etc/Changelog.md
 
 # Set cache location
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
